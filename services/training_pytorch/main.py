@@ -6,6 +6,7 @@ import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
 import psutil
+import os
 
 consumer = None
 producer = None
@@ -32,14 +33,27 @@ def load_dataset():
 
     raise RuntimeError("Dataset download failed")
 
-
 def train_model():
 
     start = time.time()
 
-    dataset = load_dataset()
-    loader = torch.utils.data.DataLoader(dataset, batch_size=64)
+    transform = transforms.Compose([transforms.ToTensor()])
 
+    dataset = torchvision.datasets.FashionMNIST(
+        root="/datasets",
+        train=True,
+        download=True,
+        transform=transform
+    )
+
+    loader = torch.utils.data.DataLoader(
+        dataset,
+        batch_size=256,
+        shuffle=True,
+        num_workers=2,
+        persistent_workers=True
+    )
+    
     model = nn.Sequential(
         nn.Flatten(),
         nn.Linear(28*28,128),
@@ -75,8 +89,9 @@ def train_model():
 
         accuracy = correct / total
 
-        cpu = psutil.cpu_percent()
-        ram = psutil.virtual_memory().percent
+        process = psutil.Process(os.getpid())
+        cpu = process.cpu_percent(interval=0.1)
+        ram = process.memory_info().rss / (1024 ** 2)
 
         event = {
             "library": "pytorch",
@@ -88,7 +103,6 @@ def train_model():
         }
 
         producer.send("training.metrics", event)
-        producer.flush()
 
     duration = time.time() - start
 
@@ -125,7 +139,8 @@ def start():
                 bootstrap_servers=["kafka1:29092"],
                 value_deserializer=lambda m: json.loads(m.decode("utf-8")),
                 group_id="pytorch-group",
-                auto_offset_reset="earliest"
+                auto_offset_reset="earliest",
+                enable_auto_commit=True
             )
 
             producer = KafkaProducer(
