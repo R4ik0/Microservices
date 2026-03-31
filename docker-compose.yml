@@ -64,6 +64,12 @@ services:
     ports:
       - "8000:8000"
 
+  auth:
+     build: ./services/auth
+     container_name: auth
+     ports:
+       - "8001:8001"
+
   training_pytorch:
     build: ./services/training_pytorch
     container_name: training_pytorch

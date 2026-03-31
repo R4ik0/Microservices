@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from database import SessionLocal, engine
@@ -6,6 +7,14 @@ from models import User, Base, UserCreate, UserLogin
 from auth import hash_password, verify_password, create_token, get_current_user
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # pour dev (autorise tout)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -24,7 +33,9 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(
         username=user.username,
         role=user.role,
-        hashed_password=hash_password(user.password)
+        hashed_password=hash_password(user.password),
+        first_name=user.first_name,
+        last_name=user.last_name
     )
     db.add(db_user)
     db.commit()
