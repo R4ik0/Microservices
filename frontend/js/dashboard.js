@@ -2,22 +2,36 @@
 const usernameDisplay = document.getElementById('usernameDisplay');
 const logoutBtn = document.getElementById('logoutBtn');
 
-const token = localStorage.getItem('access_token');
-
-// if (!token) {
-//     window.location.href = "index.html";
-//     console.log("No token found, redirecting to login.");
-// } else {
-//     // Décodage simple du JWT pour récupérer le username peut-être à exploiter pour voir si admin
-//     const payload = JSON.parse(atob(token.split('.')[1]));
-//     usernameDisplay.textContent = payload.sub;
-//     if (payload.role !== "admin") {
-//         document.getElementById("adminPanel").style.display = "none";
+// (async () => {
+//     const token = window.sessionStorage['access_token'];
+//     console.log(window.sessionStorage);
+//     console.log("Token:", token);
+//     if (!token) {
+//         window.location.href = "index.html";
+//         return;
 //     }
-// }
+
+//     try {
+//         const response = await fetch('http://localhost:8001/user', {
+//             method: 'GET',
+//             headers: { 
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         });
+//         const user = await response.json();
+//         if (user.role !== "admin") {
+//             document.getElementById("adminPanel").style.display = "none";
+//         }
+//     } catch (err) {
+//         console.error(err);
+//         // window.sessionStorage.removeItem('access_token');
+//         // window.location.href = "index.html";
+//     }
+// })();
 
 logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('access_token');
+    window.sessionStorage.removeItem('access_token');
     window.location.href = "index.html";
 });
 

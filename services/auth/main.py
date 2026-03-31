@@ -60,3 +60,7 @@ def get_users(db: Session = Depends(get_db)):
 @app.get("/protected")
 def protected(user=Depends(get_current_user)):
     return {"user": user}
+
+@app.get("/user")
+def get_user(user=Depends(get_current_user)):
+    return {"role": user.role}
