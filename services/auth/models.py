@@ -9,11 +9,15 @@ class User(Base):
     role = Column(String, default="user")
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
 
 class UserCreate(BaseModel):
     username: str
     password: str
     role: str = "user"
+    first_name: str
+    last_name: str
 
 class UserLogin(BaseModel):
     username: str
