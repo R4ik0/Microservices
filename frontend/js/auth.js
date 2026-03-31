@@ -18,7 +18,7 @@ form.addEventListener('submit', async (e) => {
         const data = await response.json();
 
         if (response.ok) {
-            localStorage.setItem('access_token', data.access_token);
+            window.sessionStorage.setItem('access_token', data.access_token);
             window.location.href = "dashboard.html"; // redirection après connexion
         } else {
             message.style.color = 'red';
