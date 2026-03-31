@@ -1,5 +1,5 @@
 kafka-python
 torch
-torchvision
 numpy
 psutil
+torchvision

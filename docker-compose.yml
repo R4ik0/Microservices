@@ -43,6 +43,17 @@ services:
       KAFKA_CLUSTERS_0_METRICS_STORE_KAFKA_TOPIC: "kafka_metrics"
       DYNAMIC_CONFIG_ENABLED: 'true'
 
+  logs_db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: logs
+    ports:
+      - "5433:5432"
+    volumes:
+      - logs_data:/var/lib/postgresql/data
+
   api:
     build: ./services/api
     container_name: api
@@ -62,10 +73,8 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     volumes:
       - datasets:/datasets
-    resources:
-      limits:
-        cpus: '1'
-        memory: 2g
+    cpus: 1
+    mem_limit: 2g
 
   training_keras:
     build: ./services/training_keras
@@ -76,10 +85,8 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     volumes:
       - datasets:/datasets
-    resources:
-      limits:
-        cpus: '1'
-        memory: 2g
+    cpus: 1
+    mem_limit: 2g
 
   logs:
     build: ./services/logs
@@ -87,11 +94,13 @@ services:
     depends_on:
       - kafka
     environment:
+      DATABASE_URL: postgres://user:password@logs_db:5432/logs
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
 volumes:
   datasets:
   kafka_data:
+  logs_data:
 
 networks:
   kafka-test:

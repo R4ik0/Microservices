@@ -3,17 +3,19 @@ import json
 import time
 import tensorflow as tf
 import psutil
+import os
 
 consumer = None
 producer = None
 
+process = psutil.Process(os.getpid())
 
 class MetricsCallback(tf.keras.callbacks.Callback):
 
     def on_epoch_end(self, epoch, logs=None):
 
-        cpu = psutil.cpu_percent()
-        ram = psutil.virtual_memory().percent
+        cpu = process.cpu_percent(interval=None)
+        ram = process.memory_info().rss / (1024 ** 2)
 
         event = {
             "library": "keras",
@@ -90,7 +92,8 @@ def start():
                 bootstrap_servers=["kafka1:29092"],
                 value_deserializer=lambda m: json.loads(m.decode("utf-8")),
                 group_id="keras-group",
-                auto_offset_reset="earliest"
+                auto_offset_reset="earliest",
+                enable_auto_commit=True
             )
 
             producer = KafkaProducer(
