@@ -2,18 +2,52 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Dashboard</h1>
+    <header class="dashboard-header">
+        <span id="usernameDisplay"></span>
+        <h1>DASHBOARD</h1>
+        <button id="logoutBtn">Déconnexion</button>
     </header>
 
-    <main>
-    </main>
+    <div class="dashboard-container">
+        <div class="dashboard-row">
+            <h2>Keras</h2>
+            <div class="chart-container">
+                <canvas id="chart1"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="chart2"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="chartCPU1"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="chartRAM1"></canvas>
+            </div>
+        </div>
 
-    <footer>
-        <p>© 2026</p>
-    </footer>
+        <div class="dashboard-row">
+            <h2>pytorch</h2>
+            <div class="chart-container">
+                <canvas id="chart3"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="chart4"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="chartCPU2"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="chartRAM2"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>
