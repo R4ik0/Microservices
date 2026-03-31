@@ -33,10 +33,20 @@ https://drive.google.com/file/d/1XIMfSFXhHHwsRJaIia87MEJ2koxCjTxE/view?usp=shari
 ## Comptes de test
 
 username : Thibz  
+password : userpass
+
+username : Raiko  
+password : userpass  
+
+username : MV_Chara  
 password : userpass  
 
 username : Admin1  
+password : adminpass
+
+username : Admin2 
 password : adminpass  
+
 
 ---
 
@@ -47,5 +57,6 @@ Le projet se lance avec Docker :
 ```bash
 docker compose up --build
 ```
+double cliker sur le fichier frontend/html/index.html
 
-Une fois lancé, les modèles commencent automatiquement leur entraînement et les métriques deviennent visibles dans l'interface.
+Une fois lancé, connecter vous puis lancer l'entreinement avec le bouton.
