@@ -1,8 +1,6 @@
 .env
 .venv
 
-services/auth/*.db
-
 __pycache__/
 *.pyc
 *.pyo
