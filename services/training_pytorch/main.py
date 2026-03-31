@@ -12,27 +12,6 @@ consumer = None
 producer = None
 
 
-def load_dataset():
-
-    for i in range(5):
-        try:
-            transform = transforms.Compose([transforms.ToTensor()])
-
-            dataset = torchvision.datasets.FashionMNIST(
-                root="/datasets",
-                train=True,
-                download=True,
-                transform=transform
-            )
-
-            return dataset
-
-        except Exception as e:
-            print("Dataset download failed, retry:", e, flush=True)
-            time.sleep(5)
-
-    raise RuntimeError("Dataset download failed")
-
 def train_model():
 
     start = time.time()
@@ -66,6 +45,8 @@ def train_model():
 
     epochs = 5
 
+    process = psutil.Process(os.getpid())
+
     for epoch in range(epochs):
 
         correct = 0
@@ -89,9 +70,9 @@ def train_model():
 
         accuracy = correct / total
 
-        process = psutil.Process(os.getpid())
         cpu = process.cpu_percent(interval=0.1)
         ram = process.memory_info().rss / (1024 ** 2)
+        elapsed = time.time() - start
 
         event = {
             "library": "pytorch",
@@ -99,10 +80,12 @@ def train_model():
             "accuracy": accuracy,
             "loss": total_loss,
             "cpu": cpu,
-            "ram": ram
+            "ram": ram,
+            "elapsed_time": elapsed
         }
 
         producer.send("training.metrics", event)
+        producer.flush()
 
     duration = time.time() - start
 
