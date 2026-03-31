@@ -12,10 +12,15 @@ process = psutil.Process(os.getpid())
 
 class MetricsCallback(tf.keras.callbacks.Callback):
 
+    def __init__(self, start_time):
+        super().__init__()
+        self.start_time = start_time
+
     def on_epoch_end(self, epoch, logs=None):
 
         cpu = process.cpu_percent(interval=None)
         ram = process.memory_info().rss / (1024 ** 2)
+        elapsed = time.time() - self.start_time
 
         event = {
             "library": "keras",
@@ -23,7 +28,8 @@ class MetricsCallback(tf.keras.callbacks.Callback):
             "accuracy": float(logs["accuracy"]),
             "loss": float(logs["loss"]),
             "cpu": cpu,
-            "ram": ram
+            "ram": ram,
+            "elapsed_time": elapsed
         }
 
         producer.send("training.metrics", event)
@@ -55,7 +61,7 @@ def train_model():
         y_train,
         epochs=5,
         batch_size=64,
-        callbacks=[MetricsCallback()]
+        callbacks=[MetricsCallback(start)]
     )
 
     duration = time.time() - start
@@ -64,6 +70,7 @@ def train_model():
         "library": "keras",
         "training_time": duration
     }
+
 
 def consume_training():
 
