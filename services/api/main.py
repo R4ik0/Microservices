@@ -54,6 +54,7 @@ def startup_event():
 
             consumer = KafkaConsumer(
                 "training.results",
+                "training.metrics",
                 bootstrap_servers=["kafka1:29092"],
                 value_deserializer=lambda m: json.loads(m.decode("utf-8")),
                 group_id="api-group",
@@ -82,12 +83,12 @@ def consume_results():
             asyncio.run(ws.send_json(result))
 
 
-def consume_results():
+# def consume_results():
 
-    for msg in consumer:
-        result = msg.value
-        print("Result received:", result, flush=True)
-        results.append(result)
+#     for msg in consumer:
+#         result = msg.value
+#         print("Result received:", result, flush=True)
+#         results.append(result)
 
 
 @app.post("/train")
