@@ -1,4 +1,6 @@
 fastapi
 uvicorn[standard]
-kafka-python
 pydantic
+sqlalchemy
+python-jose
+passlib[argon2]
