@@ -15,25 +15,31 @@
         <button id="logoutBtn">Déconnexion</button>
     </header>
 
-    <div class="dashboard-container">
-        <div class="dashboard-row">
-            <div class="chart-container">
-                <canvas id="chartAccuracy"></canvas>
+    
+        <div class="dashboard-container">
+            <div class="dashboard-row">
+                <div class="chart-container">
+                    <p>Accuracy</p>
+                    <canvas id="chartAccuracy"></canvas>
+                </div>
+                <div class="chart-container">
+                    <p>Loss</p>
+                    <canvas id="chartLoss"></canvas>
+                </div>
             </div>
-            <div class="chart-container">
-                <canvas id="chartLoss"></canvas>
+
+            <div class="dashboard-row" id="admin">
+                <div class="chart-container">
+                    <p>CPU Usage</p>
+                    <canvas id="chartCPU"></canvas>
+                </div>
+                <div class="chart-container">
+                    <p>RAM Usage</p>
+                    <canvas id="chartRAM"></canvas>
+                </div>
             </div>
         </div>
 
-        <div class="dashboard-row" id="admin">
-            <div class="chart-container">
-                <canvas id="chartCPU"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="chartRAM"></canvas>
-            </div>
-        </div>
-    </div>
     
 
     <script src="../js/dashboard.js"></script>
