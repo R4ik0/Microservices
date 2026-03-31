@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f0f2f5;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #4CAF50;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.dashboard-header button {
+    background-color: #f44336;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.dashboard-header button:hover {
+    background-color: #d32f2f;
+}
+
+.dashboard-row {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 40px;
+    margin: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.dashboard-container {
+    display:flex ;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart-container canvas{
+    min-width: max(600px, 40%);
+    background: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.chart-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
