@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
-    <link rel="stylesheet" href="../css/index_style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <div class="login-container">
         <h2>Connexion</h2>
-        <form action="#" method="POST">
+        <form id="loginForm">
             <label for="username">Nom d'utilisateur</label>
             <input type="text" id="username" name="username" placeholder="Entrez votre nom" required>
 
@@ -18,7 +18,11 @@
 
             <button type="submit">Se connecter</button>
         </form>
-        <p class="signup-link">Pas encore de compte ? <a href="#">Inscrivez-vous</a></p>
+        <p id="message""></p>
+
+        <button id="createAccountBtn">Créer un compte</button>
     </div>
+
+    <script src="../js/auth.js"></script>
 </body>
 </html>

@@ -18,7 +18,7 @@ def get_db():
         db.close()
 
 
-
+#TOTO: ajouter nom et prénom pour register
 @app.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(

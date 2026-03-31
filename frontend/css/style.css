@@ -12,7 +12,7 @@ body {
     background: white;
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(47, 0, 255, 0.856);
     width: 300px;
     text-align: center;
 }
@@ -63,4 +63,19 @@ body {
 
 .signup-link a:hover {
     text-decoration: underline;
+}
+
+#message {
+    font-weight: bold;
+    color: red;
+    margin-top:10px;
+}
+
+#createAccountBtn {
+    background-color: #2196F3;
+    margin-top:15px;
+}
+
+#createAccountBtn:hover {
+    background-color: #0b7dda;
 }
